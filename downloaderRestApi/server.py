@@ -1,10 +1,12 @@
 from flask import Flask, jsonify, request, send_from_directory
 import os
 from music_downloader import MUSIC_PATH, remove_file
+from flask_cors import CORS
 
 from music_downloader import downloader
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route("/")
