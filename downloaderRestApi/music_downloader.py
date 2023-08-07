@@ -7,6 +7,12 @@ MUSIC_PATH = os.path.join(HOME_PATH, "Music")
 CURRENT_PATH = os.getcwd()
 
 
+def remove_file(song):
+    file_path = os.path.join(MUSIC_PATH, song)
+    os.remove(file_path)
+    print(f"File '{file_path}' has been deleted.")
+
+
 def printing(message):
     COLOR_YELLOW = "\033[33m"
     COLOR_RESET = "\033[0m"
@@ -62,7 +68,7 @@ def music_downloader(video_url, output_filename=None):
 def downloader(video_url, album_name=None, song_name=None):
     printing("Downloading your music.")
     music_downloader(video_url, song_name)
-
+    songs_path = []
     printing("Getting all songs.")
     songs = get_all_songs()
 
@@ -72,4 +78,6 @@ def downloader(video_url, album_name=None, song_name=None):
 
     for song in songs:
         move_file(song, album_name)
+        songs_path.append(song)
     printing("Your music was downloaded.")
+    return songs_path

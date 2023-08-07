@@ -1,7 +1,8 @@
-from logging import debug
-from flask import Flask, request, jsonify, send_file
+from flask import Flask, jsonify, send_from_directory
 import os
-from music_downloader import music_downloader
+from music_downloader import MUSIC_PATH, get_all_songs, remove_file
+
+from music_downloader import downloader
 
 app = Flask(__name__)
 
@@ -12,26 +13,28 @@ def index():
 
 
 # Endpoint to start downloading
-#  @app.route("/download/", methods=["POST"])
-#  def start_download():
-#      video_url = request.json.get("video_url")
-#
-#      music_downloader(video_url)
-#
-#      return jsonify({"message": "Download started"})
+@app.route("/start-download")
+def start_download():
+    #  video_url = request.json.get("video_url")
 
-
-@app.route("/download")
-def download():
-    file_path = os.path.join(
-        "/home/erick/coding/projects/mp3-downloader-python",
-        "Taylor Swift - Love Story (Live on Letterman) [mNLVMDF9mUo].mp3",
+    songs = downloader(
+        video_url="https://www.youtube.com/watch?v=beLAh5dWSg4&ab_channel=LosKjarkas-Topic",
+        album_name=None,
+        song_name=None,
     )
 
-    if os.path.exists(file_path):
-        return send_file(file_path, as_attachment=True)
-    else:
-        return "File not found."
+    return jsonify({"message": "Download started", "songs": songs})
+
+
+@app.route("/download/<song>", methods=["GET"])
+def download(song):
+    try:
+        if os.path.exists(MUSIC_PATH):
+            return send_from_directory(MUSIC_PATH, song, as_attachment=True)
+        else:
+            return "File not found"
+    finally:
+        remove_file(song)
 
 
 if __name__ == "__main__":
