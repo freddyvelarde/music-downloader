@@ -1,6 +1,7 @@
-from flask import Flask, jsonify, request, send_from_directory
 import os
-from music_downloader import MUSIC_PATH, remove_file
+from flask import Flask, jsonify, request, send_from_directory
+from os_controller import MUSIC_PATH, remove_file
+from music_downloader import downloader
 from flask_cors import CORS
 
 from music_downloader import downloader
