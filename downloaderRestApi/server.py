@@ -1,6 +1,6 @@
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, request, send_from_directory
 import os
-from music_downloader import MUSIC_PATH, get_all_songs, remove_file
+from music_downloader import MUSIC_PATH, remove_file
 
 from music_downloader import downloader
 
@@ -12,18 +12,19 @@ def index():
     return jsonify({"message": "Hello world"})
 
 
-# Endpoint to start downloading
-@app.route("/start-download")
+@app.route("/start-download", methods=["POST"])
 def start_download():
-    #  video_url = request.json.get("video_url")
+    video_url = request.json.get("video_url")
+    algun_name = request.json.get("album_name")
+    song_name = request.json.get("song_name")
 
     songs = downloader(
-        video_url="https://www.youtube.com/watch?v=beLAh5dWSg4&ab_channel=LosKjarkas-Topic",
-        album_name=None,
-        song_name=None,
+        video_url=video_url,
+        album_name=algun_name or None,
+        song_name=song_name or None,
     )
 
-    return jsonify({"message": "Download started", "songs": songs})
+    return jsonify({"songs": songs})
 
 
 @app.route("/download/<song>", methods=["GET"])
