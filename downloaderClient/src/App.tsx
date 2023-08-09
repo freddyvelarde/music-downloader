@@ -1,68 +1,51 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import "./App.css";
+import useHttpRequest from "./hooks/useHttpRequest";
+import { start_download_url } from "./config/endpoints";
 
 function App() {
-  const [songName, setSongName] = useState<string>("");
-  const [songlist, setSongList] = useState<string[]>([]);
+  const [videoUrl, setVideoUrl] = useState<string>("");
 
-  const downloadSong = async (video_url: string) => {
-    const request = await fetch("http://192.168.0.9:7676/start-download", {
+  const { getAllSongs, downloadSong, response } = useHttpRequest<string[]>();
+
+  const onChangeEventHandler = (e: ChangeEvent<HTMLInputElement>) =>
+    setVideoUrl(e.target.value);
+
+  const submitEventHandler = (e: FormEvent) => {
+    e.preventDefault();
+    getAllSongs(start_download_url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        video_url,
-      }),
+      body: {
+        video_url: videoUrl,
+      },
     });
-    const response = await request.json();
-    setSongList(response);
-  };
-
-  const download = async (songName: string) => {
-    const response = await fetch(
-      `http://192.168.0.9:7676/download/${songName}`,
-    );
-    const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = songName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
-  };
-
-  const onChangeEventHandler = (e: ChangeEvent<HTMLInputElement>) =>
-    setSongName(e.target.value);
-
-  const submitEventHandler = (e: FormEvent) => {
-    e.preventDefault();
-    console.log(songName);
-    downloadSong(songName);
   };
 
   return (
     <>
       <form action="" onSubmit={submitEventHandler}>
         <input
-          value={songName}
+          value={videoUrl}
           type="text"
           placeholder="Paste here your song youtube link."
           onChange={onChangeEventHandler}
         />
         <button>download</button>
       </form>
-      {songlist ? (
-        songlist.map((i: string) => (
-          <button onClick={() => download(i)}>{i}</button>
+      {response.data ? (
+        response.data.map((link: string, index: number) => (
+          <button key={index} onClick={() => downloadSong(link)}>
+            {link}
+          </button>
         ))
       ) : (
         <p>Theres nothing to save</p>
       )}
 
-      <button onClick={() => console.log(songlist)}>songs</button>
+      <button onClick={() => console.log(response.data)}>songs</button>
     </>
   );
 }
