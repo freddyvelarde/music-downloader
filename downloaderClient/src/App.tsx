@@ -16,11 +16,10 @@ function App() {
       }),
     });
     const response = await request.json();
-    setSongList(response.songs);
+    setSongList(response);
   };
 
   const download = async (songName: string) => {
-    // for (const song of songlist) {
     const response = await fetch(
       `http://192.168.0.9:5000/download/${songName}`,
     );
@@ -28,12 +27,11 @@ function App() {
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = songName; // You can set the desired filename here
+    link.download = songName;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     window.URL.revokeObjectURL(url);
-    // }
   };
 
   const onChangeEventHandler = (e: ChangeEvent<HTMLInputElement>) =>
@@ -45,17 +43,13 @@ function App() {
     downloadSong(songName);
   };
 
-  // useEffect(() => {
-  //   download();
-  // }, [songlist]);
-
   return (
     <>
       <form action="" onSubmit={submitEventHandler}>
         <input
           value={songName}
           type="text"
-          placeholder="song name"
+          placeholder="song link"
           onChange={onChangeEventHandler}
         />
         <button>download</button>
