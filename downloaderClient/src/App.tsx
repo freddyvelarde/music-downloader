@@ -49,7 +49,7 @@ function App() {
         <input
           value={songName}
           type="text"
-          placeholder="song or album link."
+          placeholder="Paste here your song youtube link."
           onChange={onChangeEventHandler}
         />
         <button>download</button>
