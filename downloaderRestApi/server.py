@@ -32,7 +32,7 @@ def start_download():
         song_name=song_name or None,
     )
 
-    return jsonify({"songs": songs})
+    return jsonify(songs)
 
 
 @app.route("/download/<song>", methods=["GET"])
