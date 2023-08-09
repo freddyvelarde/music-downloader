@@ -1,5 +1,4 @@
 yt-dlp
 flask
-beautifulsoup4
 requests
 flask-cors

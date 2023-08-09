@@ -17,13 +17,18 @@ def index():
 
 @app.route("/start-download", methods=["POST"])
 def start_download():
-    video_url = request.json.get("video_url")
-    algun_name = request.json.get("album_name")
-    song_name = request.json.get("song_name")
+    data = request.get_json()
+
+    if not data:
+        return jsonify({"Error": "Invalid JSON data"}), 400
+
+    video_url = data.get("video_url")
+    albun_name = data.get("album_name")
+    song_name = data.get("song_name")
 
     songs = downloader(
         video_url=video_url,
-        album_name=algun_name or None,
+        album_name=albun_name or None,
         song_name=song_name or None,
     )
 
