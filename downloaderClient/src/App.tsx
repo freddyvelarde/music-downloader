@@ -6,7 +6,7 @@ function App() {
   const [songlist, setSongList] = useState<string[]>([]);
 
   const downloadSong = async (video_url: string) => {
-    const request = await fetch("http://192.168.0.9:5000/start-download", {
+    const request = await fetch("http://192.168.0.9:7676/start-download", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,7 +21,7 @@ function App() {
 
   const download = async (songName: string) => {
     const response = await fetch(
-      `http://192.168.0.9:5000/download/${songName}`,
+      `http://192.168.0.9:7676/download/${songName}`,
     );
     const blob = await response.blob();
     const url = window.URL.createObjectURL(blob);
@@ -49,7 +49,7 @@ function App() {
         <input
           value={songName}
           type="text"
-          placeholder="song link"
+          placeholder="song or album link."
           onChange={onChangeEventHandler}
         />
         <button>download</button>

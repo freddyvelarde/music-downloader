@@ -29,6 +29,9 @@ def get_all_songs():
 
 
 def move_file(song_file, album_name=None):
+    os.makedirs(MUSIC_PATH, exist_ok=True)
+    os.makedirs(f"{HOME_PATH}/Downloads", exist_ok=True)
+
     song_path = f"{CURRENT_PATH}/{song_file}"
 
     destination_path = MUSIC_PATH
