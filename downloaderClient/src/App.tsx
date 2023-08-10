@@ -2,11 +2,13 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import "./App.css";
 import useHttpRequest from "./hooks/useHttpRequest";
 import { start_download_url } from "./config/endpoints";
+import SongCards from "./sections/SongCards";
 
 function App() {
   const [videoUrl, setVideoUrl] = useState<string>("");
 
-  const { getAllSongs, downloadSong, response } = useHttpRequest<string[]>();
+  const { getAllSongs, response, setResponse, loading, downloadSong } =
+    useHttpRequest();
 
   const onChangeEventHandler = (e: ChangeEvent<HTMLInputElement>) =>
     setVideoUrl(e.target.value);
@@ -22,6 +24,19 @@ function App() {
         video_url: videoUrl,
       },
     });
+    setVideoUrl("");
+  };
+
+  const downloadAllSongs = () => {
+    const updatedResponse = response.slice(); // Create a shallow copy of the response array
+
+    for (const song of response) {
+      downloadSong(song);
+      const indexToRemove = updatedResponse.indexOf(song);
+      updatedResponse.splice(indexToRemove, 1); // Remove the song from the copied array
+    }
+
+    setResponse(updatedResponse); // Update the state with the modified array
   };
 
   return (
@@ -35,17 +50,14 @@ function App() {
         />
         <button>download</button>
       </form>
-      {response.data ? (
-        response.data.map((link: string, index: number) => (
-          <button key={index} onClick={() => downloadSong(link)}>
-            {link}
-          </button>
-        ))
-      ) : (
-        <p>Theres nothing to save</p>
-      )}
 
-      <button onClick={() => console.log(response.data)}>songs</button>
+      <SongCards songList={response} setResponse={setResponse} />
+
+      {response.length > 1 ? (
+        <button onClick={downloadAllSongs}> Download All Songs </button>
+      ) : null}
+
+      {loading ? <p>downloading songs</p> : null}
     </>
   );
 }

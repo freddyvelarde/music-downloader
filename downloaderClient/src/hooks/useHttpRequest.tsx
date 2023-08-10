@@ -7,22 +7,14 @@ type HttpRequestOptions = {
   body?: any;
 };
 
-type HttpResponse<T> = {
-  data: T | null;
-  error: Error | null | unknown;
-  loading: boolean;
-};
-
-function useHttpRequest<T>() {
-  const [response, setResponse] = useState<HttpResponse<T>>({
-    data: null,
-    error: null,
-    loading: false,
-  });
+function useHttpRequest() {
+  const [response, setResponse] = useState<string[]>([]);
+  const [error, setError] = useState<Error | null | unknown>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const getAllSongs = async (url: string, options?: HttpRequestOptions) => {
     try {
-      setResponse({ ...response, loading: true });
+      setLoading(true);
 
       const httpResponse = await fetch(url, {
         method: options?.method || "GET",
@@ -37,9 +29,12 @@ function useHttpRequest<T>() {
       }
 
       const responseData = await httpResponse.json();
-      setResponse({ data: responseData, error: null, loading: false });
+      setResponse([...response, ...responseData]);
     } catch (err) {
-      setResponse({ data: null, error: err, loading: false });
+      setResponse([...response, ...[]]);
+      setError(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -60,7 +55,7 @@ function useHttpRequest<T>() {
     }
   };
 
-  return { getAllSongs, response, downloadSong };
+  return { getAllSongs, downloadSong, error, loading, response, setResponse };
 }
 
 export default useHttpRequest;
