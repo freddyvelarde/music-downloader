@@ -1,5 +1,6 @@
 import useHttpRequest from "../../hooks/useHttpRequest";
 import downloadIcon from "../../assets/download-icon.svg";
+import "./song.styles.css";
 
 interface SongCardProps {
   songList: string[];
@@ -17,10 +18,10 @@ export default function SongCards({ songList, setResponse }: SongCardProps) {
 
   return (
     <div>
-      {songList ? (
+      {songList.length >= 1 ? (
         songList.map((link: string, index: number) => (
-          <div>
-            <button key={index}>{link}</button>
+          <div className="card" key={index}>
+            <span>{link}</span>
             <img
               onClick={() => eventDownloadSong(link)}
               src={downloadIcon}
@@ -30,7 +31,7 @@ export default function SongCards({ songList, setResponse }: SongCardProps) {
           </div>
         ))
       ) : (
-        <p>Theres nothing to save</p>
+        <p id="loading">Search your song to download it.</p>
       )}
     </div>
   );

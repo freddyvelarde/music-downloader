@@ -36,6 +36,7 @@ a:hover {
 body {
   background-color: var(--dark-background);
   margin: 0.8rem;
+  min-width: 380px;
 }
 
 h1 {

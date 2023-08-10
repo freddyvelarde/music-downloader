@@ -1,0 +1,38 @@
+.card {
+  min-height: 2.3rem;
+  width: 60%;
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  background: var(--dark-foreground);
+  margin: 4px;
+  margin-left: 20%;
+  padding: 10px;
+}
+
+.card img {
+  cursor: pointer;
+  transition: ease-out 0.3s;
+}
+
+@media (min-width: 768px) {
+  .card img:hover {
+    transform: scale(1.2);
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    min-height: 2.3rem;
+    width: 96%;
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    background: var(--dark-foreground);
+    margin: 2% 0;
+  }
+}

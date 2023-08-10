@@ -16,8 +16,8 @@ function App() {
 
   const submitEventHandler = (e: FormEvent) => {
     e.preventDefault();
-    if (!isYouTubeLink(videoUrl)) {
-      alert("Your link is not a youtube link");
+    if (!isYouTubeLink(videoUrl) || loading) {
+      alert("Your link is not a youtube link or we're searching a song.");
       return;
     }
     getAllSongs(start_download_url, {
@@ -56,13 +56,17 @@ function App() {
         <button id="btn-search">Search</button>
       </form>
 
+      <br />
+
       <SongCards songList={response} setResponse={setResponse} />
 
       {response.length > 1 ? (
-        <button onClick={downloadAllSongs}> Download All Songs </button>
+        <div id="btn-download-all">
+          <button onClick={downloadAllSongs}> Download All Songs </button>
+        </div>
       ) : null}
 
-      {loading ? <p>downloading songs</p> : null}
+      {loading ? <p id="loading">Searching song...</p> : null}
     </>
   );
 }

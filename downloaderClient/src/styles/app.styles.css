@@ -26,8 +26,53 @@
   transition: 0.1s ease-in;
 }
 
+/* loading  */
+
+#loading {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+/* button */
+#btn-download-all {
+  display: flex;
+  justify-content: center;
+}
+
+#btn-download-all button {
+  margin-top: 25px;
+  border-radius: 5px;
+  border: 1px solid var(--dark-secondaryBtn);
+  color: var(--dark-secondaryBtn);
+  padding: 0.2em 0.9em;
+  background: transparent;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: 0.1s ease-in;
+}
 @media (min-width: 768px) {
   #btn-search:hover {
     background: var(--dark-foreground);
+  }
+  #btn-download-all button:hover {
+    transform: scale(1.09);
+  }
+}
+
+@media (max-width: 768px) {
+  #form input {
+    width: 77%;
+    font-size: 0.7rem;
+  }
+
+  #btn-search {
+    width: 17%;
+    font-size: 0.8rem;
+  }
+  #btn-download-all button {
+    font-size: 0.8rem;
+    padding: 10px;
   }
 }
