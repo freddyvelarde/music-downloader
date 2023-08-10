@@ -1,0 +1,10 @@
+{
+  "dark": {
+    "background": "#0A0D12",
+    "foreground": "#1F222B",
+    "title": "#F3F3F3",
+    "text": "#D5D4D9",
+    "primaryBtn": "#68FE5E",
+    "secondaryBtn": "#8072f9"
+  }
+}

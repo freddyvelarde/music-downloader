@@ -1,5 +1,4 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import "./App.css";
 import useHttpRequest from "./hooks/useHttpRequest";
 import { start_download_url } from "./config/endpoints";
 import SongCards from "./sections/SongCards";
@@ -28,15 +27,15 @@ function App() {
   };
 
   const downloadAllSongs = () => {
-    const updatedResponse = response.slice(); // Create a shallow copy of the response array
+    const updatedResponse = response.slice();
 
     for (const song of response) {
       downloadSong(song);
       const indexToRemove = updatedResponse.indexOf(song);
-      updatedResponse.splice(indexToRemove, 1); // Remove the song from the copied array
+      updatedResponse.splice(indexToRemove, 1);
     }
 
-    setResponse(updatedResponse); // Update the state with the modified array
+    setResponse(updatedResponse);
   };
 
   return (
