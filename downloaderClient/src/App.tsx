@@ -2,6 +2,8 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import useHttpRequest from "./hooks/useHttpRequest";
 import { start_download_url } from "./config/endpoints";
 import SongCards from "./sections/SongCards";
+import "./styles/app.styles.css";
+import isYouTubeLink from "./helpers/youtube.verify";
 
 function App() {
   const [videoUrl, setVideoUrl] = useState<string>("");
@@ -14,6 +16,10 @@ function App() {
 
   const submitEventHandler = (e: FormEvent) => {
     e.preventDefault();
+    if (!isYouTubeLink(videoUrl)) {
+      alert("Your link is not a youtube link");
+      return;
+    }
     getAllSongs(start_download_url, {
       method: "POST",
       headers: {
@@ -40,14 +46,14 @@ function App() {
 
   return (
     <>
-      <form action="" onSubmit={submitEventHandler}>
+      <form id="form" action="" onSubmit={submitEventHandler}>
         <input
           value={videoUrl}
-          type="text"
-          placeholder="Paste here your song youtube link."
+          type="url"
+          placeholder="Paste YouTube url here."
           onChange={onChangeEventHandler}
         />
-        <button>download</button>
+        <button id="btn-search">Search</button>
       </form>
 
       <SongCards songList={response} setResponse={setResponse} />
