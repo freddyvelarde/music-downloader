@@ -9,7 +9,7 @@ def music_downloader(video_url, output_filename=None):
             {
                 "key": "FFmpegExtractAudio",
                 "preferredcodec": "mp3",
-                "preferredquality": "192",
+                "preferredquality": "128",
             }
         ],
     }
