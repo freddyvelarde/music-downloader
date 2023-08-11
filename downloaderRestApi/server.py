@@ -15,7 +15,7 @@ def index():
     return jsonify({"message": "Hello world"})
 
 
-@app.route("/start-download", methods=["POST"])
+@app.route("/search", methods=["POST"])
 def start_download():
     data = request.get_json()
 
