@@ -40,7 +40,17 @@ function useHttpRequest() {
 
   const downloadSong = async (songName: string) => {
     try {
-      const response = await fetch(download_url(songName));
+      const requestBody = {
+        song_name: songName,
+      };
+
+      const response = await fetch(download_url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement("a");

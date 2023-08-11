@@ -23,27 +23,28 @@ def start_download():
         return jsonify({"Error": "Invalid JSON data"}), 400
 
     video_url = data.get("video_url")
-    albun_name = data.get("album_name")
-    song_name = data.get("song_name")
 
     songs = downloader(
         video_url=video_url,
-        album_name=albun_name or None,
-        song_name=song_name or None,
     )
 
     return jsonify(songs)
 
 
-@app.route("/download/<song>", methods=["GET"])
-def download(song):
+@app.route("/download", methods=["POST"])
+def download():
+    data = request.get_json()
+    song_name = data.get("song_name")
     try:
-        if os.path.exists(MUSIC_PATH):
-            return send_from_directory(MUSIC_PATH, song, as_attachment=True)
-        else:
-            return "File not found"
+        #  new_song_name = f'{data.get("new_song_name")}.mp3'
+
+        #  rename_song(old_song_name, new_song_name)
+        return send_from_directory(MUSIC_PATH, song_name, as_attachment=True)
+
+        #  return "renamed"
+        #  return send_from_directory(MUSIC_PATH, old_song_name, as_attachment=True)
     finally:
-        remove_file(song)
+        remove_file(song_name)
 
 
 if __name__ == "__main__":
