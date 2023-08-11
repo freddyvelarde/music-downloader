@@ -58,7 +58,7 @@ function App() {
 
       <br />
 
-      <SongCards songList={response} setResponse={setResponse} />
+      <SongCards />
 
       {response.length > 1 ? (
         <div id="btn-download-all">

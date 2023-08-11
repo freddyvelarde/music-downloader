@@ -18,11 +18,8 @@ def printing(message):
     print(COLOR_YELLOW + message + COLOR_RESET)
 
 
-def get_song_name(song_name, new_song_name):
-    old_song_path = f"{MUSIC_PATH}/{song_name}"
-    new_song_path = f"{MUSIC_PATH}/{new_song_name}"
-    os.rename(old_song_path, new_song_path)
-    printing(f"{song_name} renamed to {new_song_name}")
+def get_songs_from_file_system():
+    return os.listdir(MUSIC_PATH)
 
 
 def get_all_songs():
