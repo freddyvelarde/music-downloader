@@ -1,6 +1,11 @@
 import os
 from flask import Flask, jsonify, request, send_from_directory
-from os_controller import MUSIC_PATH, get_songs_from_file_system, remove_file
+from os_controller import (
+    MUSIC_PATH,
+    get_songs_from_file_system,
+    remove_file,
+    rename_file,
+)
 from music_downloader import downloader
 from flask_cors import CORS
 
@@ -35,6 +40,21 @@ def start_download():
 def get_all_songs():
     songs = get_songs_from_file_system()
     return songs
+
+
+@app.route("/rename", methods=["POST"])
+def rename_song_name():
+    data = request.get_json()
+
+    song_name = data.get("song_name")
+    new_song_name = data.get("new_song_name")
+
+    if not song_name or not new_song_name:
+        return jsonify({"message": "Missing 'song_name' or 'new_song_name' field."})
+
+    res = rename_file(song_name, new_song_name)
+
+    return jsonify({"message": res})
 
 
 @app.route("/download", methods=["POST"])

@@ -6,6 +6,14 @@ MUSIC_PATH = os.path.join(HOME_PATH, "Music")
 CURRENT_PATH = os.getcwd()
 
 
+def rename_file(song_name, new_song_name):
+    source_path = os.path.join(MUSIC_PATH, song_name)
+    destine_path = os.path.join(MUSIC_PATH, f"{new_song_name}.mp3")
+
+    os.rename(source_path, destine_path)
+    return f"{song_name} renamed to {new_song_name}.mp3"
+
+
 def remove_file(song):
     file_path = os.path.join(MUSIC_PATH, song)
     os.remove(file_path)
