@@ -4,6 +4,7 @@ import { start_download_url } from "./config/endpoints";
 import SongCards from "./sections/SongCards";
 import "./styles/app.styles.css";
 import isYouTubeLink from "./helpers/youtube.verify";
+import Spinner from "./componets/Spinner";
 
 function App() {
   const [videoUrl, setVideoUrl] = useState<string>("");
@@ -58,7 +59,7 @@ function App() {
         </div>
       ) : null}
 
-      {loading ? <p id="loading">Searching song...</p> : null}
+      {loading ? <Spinner /> : null}
     </>
   );
 }

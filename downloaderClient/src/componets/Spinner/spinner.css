@@ -1,0 +1,15 @@
+#spinner {
+  width: 2rem;
+}
+
+#spinner-container {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+  #spinner {
+    width: 1.5rem;
+  }
+}

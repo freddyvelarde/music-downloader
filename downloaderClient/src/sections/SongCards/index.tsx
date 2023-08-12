@@ -1,18 +1,13 @@
 import useDownloader from "../../hooks/useDownloader";
 import downloadIcon from "../../assets/download-icon.svg";
 import "./song.styles.css";
-import { useEffect } from "react";
 
 export default function SongCards() {
-  const { downloadSong, getAllSongs, songList } = useDownloader();
+  const { downloadSong, songList } = useDownloader();
 
   const eventDownloadSong = (link: string) => {
     downloadSong(link);
   };
-
-  useEffect(() => {
-    getAllSongs();
-  }, []);
 
   return (
     <div>
