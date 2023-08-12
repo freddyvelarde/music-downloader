@@ -17,6 +17,10 @@
   transition: ease-out 0.3s;
 }
 
+#title-song {
+  cursor: pointer;
+}
+
 @media (min-width: 768px) {
   .card img:hover {
     transform: scale(1.2);
