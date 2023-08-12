@@ -1,6 +1,6 @@
 .card {
   min-height: 2.3rem;
-  width: 60%;
+  width: 70%;
   display: flex;
 
   justify-content: space-between;
@@ -8,7 +8,7 @@
 
   background: var(--dark-foreground);
   margin: 4px;
-  margin-left: 20%;
+  margin-left: 15%;
   padding: 10px;
 }
 
@@ -19,6 +19,34 @@
 
 #title-song {
   cursor: pointer;
+}
+
+/* renaming form */
+
+#renaming-form {
+  width: 97%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#renaming-form input {
+  padding: 0.2rem 0.4rem;
+  background: var(--dark-background);
+  border: none;
+  width: 70%;
+  outline: none;
+}
+
+#renaming-form button {
+  cursor: pointer;
+  border-radius: 0.4rem;
+  /* background: var(--dark-primaryBtn); */
+  background: transparent;
+  color: var(--dark-secondaryBtn);
+
+  padding: 4px 1rem;
+  border: 1px solid var(--dark-secondaryBtn);
+  margin-left: 0.3rem;
 }
 
 @media (min-width: 768px) {
@@ -38,5 +66,16 @@
 
     background: var(--dark-foreground);
     margin: 2% 0;
+  }
+  #renaming-form button {
+    width: 90%;
+    margin: 0 5%;
+  }
+  #renaming-form input {
+    padding: 0.1rem 0.1rem;
+    background: var(--dark-background);
+    border: none;
+    width: 80%;
+    outline: none;
   }
 }
