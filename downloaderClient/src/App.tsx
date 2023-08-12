@@ -1,5 +1,5 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-import useHttpRequest from "./hooks/useHttpRequest";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import useDownloader from "./hooks/useDownloader";
 import { start_download_url } from "./config/endpoints";
 import SongCards from "./sections/SongCards";
 import "./styles/app.styles.css";
@@ -8,8 +8,8 @@ import isYouTubeLink from "./helpers/youtube.verify";
 function App() {
   const [videoUrl, setVideoUrl] = useState<string>("");
 
-  const { getAllSongs, response, setResponse, loading, downloadSong } =
-    useHttpRequest();
+  const { getAllSongs, searchSong, loading, songList, downloadAllSongs } =
+    useDownloader();
 
   const onChangeEventHandler = (e: ChangeEvent<HTMLInputElement>) =>
     setVideoUrl(e.target.value);
@@ -20,7 +20,7 @@ function App() {
       alert("Your link is not a youtube link or we're searching a song.");
       return;
     }
-    getAllSongs(start_download_url, {
+    searchSong(start_download_url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,17 +32,9 @@ function App() {
     setVideoUrl("");
   };
 
-  const downloadAllSongs = () => {
-    const updatedResponse = response.slice();
-
-    for (const song of response) {
-      downloadSong(song);
-      const indexToRemove = updatedResponse.indexOf(song);
-      updatedResponse.splice(indexToRemove, 1);
-    }
-
-    setResponse(updatedResponse);
-  };
+  useEffect(() => {
+    getAllSongs();
+  }, []);
 
   return (
     <>
@@ -60,7 +52,7 @@ function App() {
 
       <SongCards />
 
-      {response.length > 1 ? (
+      {songList.length > 1 ? (
         <div id="btn-download-all">
           <button onClick={downloadAllSongs}> Download All Songs </button>
         </div>

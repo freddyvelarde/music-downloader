@@ -1,31 +1,13 @@
-import useHttpRequest from "../../hooks/useHttpRequest";
+import useDownloader from "../../hooks/useDownloader";
 import downloadIcon from "../../assets/download-icon.svg";
 import "./song.styles.css";
-import { get_all_songs } from "../../config/endpoints";
-import { useEffect, useState } from "react";
-
-interface SongCardProps {
-  // songList: string[];
-  setResponse: (songList: string[]) => void;
-}
+import { useEffect } from "react";
 
 export default function SongCards() {
-  const { downloadSong } = useHttpRequest();
-  const [songList, setSongList] = useState<string[]>([]);
+  const { downloadSong, getAllSongs, songList } = useDownloader();
 
   const eventDownloadSong = (link: string) => {
     downloadSong(link);
-    getAllSongs();
-  };
-
-  const getAllSongs = async () => {
-    try {
-      const request = await fetch(get_all_songs);
-      const songs = await request.json();
-      setSongList(songs);
-    } catch (e) {
-      console.log(e);
-    }
   };
 
   useEffect(() => {

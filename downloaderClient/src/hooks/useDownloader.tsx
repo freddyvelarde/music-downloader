@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { download_url } from "../config/endpoints";
+import { download_url, get_all_songs } from "../config/endpoints";
 
 type HttpRequestOptions = {
   method: "GET" | "POST" | "PUT" | "DELETE";
@@ -7,12 +7,24 @@ type HttpRequestOptions = {
   body?: any;
 };
 
-function useHttpRequest() {
-  const [response, setResponse] = useState<string[]>([]);
+function useDownloader() {
+  const [songList, setSongList] = useState<string[]>([]);
   const [error, setError] = useState<Error | null | unknown>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const getAllSongs = async (url: string, options?: HttpRequestOptions) => {
+  const getAllSongs = async () => {
+    try {
+      const request = await fetch(get_all_songs);
+      const songs = await request.json();
+      setSongList(songs);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getSongListLength = (): number => songList.length;
+
+  const searchSong = async (url: string, options?: HttpRequestOptions) => {
     try {
       setLoading(true);
 
@@ -27,11 +39,7 @@ function useHttpRequest() {
           `HTTP request failed with status ${httpResponse.status}`,
         );
       }
-
-      const responseData = await httpResponse.json();
-      setResponse([...response, ...responseData]);
     } catch (err) {
-      setResponse([...response, ...[]]);
       setError(err);
     } finally {
       setLoading(false);
@@ -65,7 +73,22 @@ function useHttpRequest() {
     }
   };
 
-  return { getAllSongs, downloadSong, error, loading, response, setResponse };
+  const downloadAllSongs = () => {
+    for (const song of songList) {
+      downloadSong(song);
+    }
+  };
+
+  return {
+    searchSong,
+    downloadSong,
+    error,
+    loading,
+    songList,
+    downloadAllSongs,
+    getAllSongs,
+    getSongListLength,
+  };
 }
 
-export default useHttpRequest;
+export default useDownloader;
