@@ -1,8 +1,12 @@
 import os
 import shutil
 
-HOME_PATH = os.path.expanduser("~")
+#  HOME_PATH = os.path.expanduser("~")
+#  MUSIC_PATH = os.path.join(HOME_PATH, "Music")
+
+HOME_PATH = os.path.dirname(os.path.abspath(__file__))
 MUSIC_PATH = os.path.join(HOME_PATH, "Music")
+
 CURRENT_PATH = os.getcwd()
 
 

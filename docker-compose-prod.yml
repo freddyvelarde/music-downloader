@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  server:
+    build:
+      context: ./downloaderRestApi
+      dockerfile: Dockerfile
+    container_name: downloader_server_prod
+    ports:
+      - "7676:7676"
+  # server:
+  #   build:
+  #     context: ./downloaderRestApi
+  #     dockerfile: Dockerfile.prod
+  #   container_name: downloader_server_prod
+  #   ports:
+  #     - "7676:7676"
+
+  client:
+    build:
+      context: ./downloaderClient
+      dockerfile: Dockerfile.prod
+    container_name: downloader_client_prod
+    ports:
+      - "8080:80"
+    # ports:
+    #   - "7677:7677"

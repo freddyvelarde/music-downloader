@@ -1,4 +1,4 @@
-import { useState, FormEvent } from "react";
+import { useState } from "react";
 import useDownloader from "../../hooks/useDownloader";
 import downloadIcon from "../../assets/download-icon.svg";
 import "./song.styles.css";

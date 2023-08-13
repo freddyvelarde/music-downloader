@@ -5,7 +5,7 @@ interface SongListState {
 }
 
 const initialState: SongListState = {
-  value: ["test song naem", "anther test osng :(", "xdxdxdxdx"],
+  value: [],
 };
 
 const songListSlice = createSlice({

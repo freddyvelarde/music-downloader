@@ -1,5 +1,4 @@
 import loadingSpinner from "../../assets/loading-spinner.svg";
-import useDownloader from "../../hooks/useDownloader";
 import "./spinner.css";
 
 export default function Spinner() {
